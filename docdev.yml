@@ -1,0 +1,54 @@
+# ~/.tmuxinator/docdev.yml
+
+name: docdev
+root: ~/Projects/doc-server/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t docdev
+
+windows:
+  - backend:
+      layout: 5bfd,193x43,0,0{105x43,0,0,45,87x43,106,0[87x21,106,0,49,87x21,106,22,50]} 
+      panes:
+        - vim ~/Projects/doc-server/app.js
+        - vim ~/Projects/doc-server/libs/
+        - # console
+  - frontend:
+      layout: 34a7,96x42,0,0{51x42,0,0,46,44x42,52,0[44x20,52,0,51,44x21,52,21,52]}
+      panes:
+        - vim ~/Projects/doc-server/frontend/js/content-specify.js
+        - vim ~/Projects/doc-server/views/index.html
+        - cd ~/Projects/doc-server/views/
+  - utility:
+      layout: a745,96x42,0,0{56x42,0,0,47,39x42,57,0[39x20,57,0,53,39x21,57,21,54]}
+      panes:
+        - vim ~/Projects/doc-server/utils/ied2json.py
+        - cd ~/Projects/doc-server/utils/
+        - ipython
+  - servers: 
+      layout: even-horizontal
+      panes:
+        - mongo
+        - mongod --dbpath ~/data/db
+        - node app.js
